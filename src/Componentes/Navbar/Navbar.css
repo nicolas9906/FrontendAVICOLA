@@ -1,0 +1,83 @@
+/* Navbar.css */
+.navbar {
+    background-color: black; /* Cambia el color de fondo de la barra de navegación a negro */
+    padding: 10px 20px; /* Espaciado alrededor de la navbar */
+    display: flex; /* Flexbox para alinear elementos */
+    justify-content: flex-start; /* Alinear elementos al inicio (izquierda) */
+    align-items: center; /* Centrar elementos verticalmente */
+    position: relative; /* Para el menú desplegable */
+    z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre el logo y el menú */
+    align-items: center; /* Centrar elementos verticalmente */
+    width: 100%; /* Asegúrate de que ocupe el ancho completo */
+}
+
+.logo {
+    color: rgb(167, 54, 54); /* Cambia el color del logo a blanco para que destaque sobre el fondo negro */
+    font-size: 20px; /* Tamaño de fuente del logo */
+    font-weight: bold; /* Negrita */
+    margin-right: auto; /* Asegúrate de que haya espacio a la derecha */
+}
+
+.menu-toggle {
+    display: none; /* Ocultar por defecto */
+    flex-direction: column; /* Para mostrar las barras en vertical */
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+}
+
+.bar {
+    height: 3px; /* Grosor de las barras */
+    width: 25px; /* Ancho de las barras */
+    background-color: white; /* Color de las barras (blanco) */
+    margin: 3px; /* Espacio entre las barras */
+    transition: 0.3s; /* Transición suave para la animación */
+}
+
+/* Estilo para el menú */
+.nav-menu {
+    display: flex; /* Mostrar elementos en fila */
+    list-style: none; /* Sin viñetas */
+    margin: 0; /* Sin margen */
+    padding: 0; /* Sin relleno */
+}
+
+.nav-item {
+    margin-left: 20px; /* Espacio entre elementos */
+}
+
+.nav-item a {
+    color: white; /* Color del texto de los enlaces (blanco) */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 16px; /* Tamaño de fuente del texto */
+}
+
+.nav-item a:hover {
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+}
+
+/* Estilo para el menú desplegable */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Mostrar el botón de menú en pantallas pequeñas */
+    }
+
+    .nav-menu {
+        display: none; /* Ocultar menú en pantallas pequeñas */
+        flex-direction: column; /* Mostrar en columna */
+        position: absolute; /* Posicionarlo absolutamente */
+        top: 60px; /* Justo debajo de la navbar */
+        right: 0; /* Alinear a la derecha */
+        background-color: black; /* Color de fondo del menú desplegable (negro) */
+        width: 100%; /* Ancho completo */
+        padding: 10px 0; /* Relleno alrededor del menú */
+        border-radius: 5px; /* Bordes redondeados */
+    }
+
+    .nav-menu.active {
+        display: flex; /* Mostrar menú cuando está activo */
+    }
+}
