@@ -1,83 +1,110 @@
 /* Navbar.css */
+
+/* Reducir el padding de la barra de navegación */
 .navbar {
-    background-color: black; /* Cambia el color de fondo de la barra de navegación a negro */
-    padding: 10px 20px; /* Espaciado alrededor de la navbar */
-    display: flex; /* Flexbox para alinear elementos */
-    justify-content: flex-start; /* Alinear elementos al inicio (izquierda) */
-    align-items: center; /* Centrar elementos verticalmente */
-    position: relative; /* Para el menú desplegable */
-    z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
+    background-color: #333;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 5px 20px; /* Reducir el padding */
 }
 
 .navbar-container {
     display: flex;
-    justify-content: space-between; /* Espacio entre el logo y el menú */
-    align-items: center; /* Centrar elementos verticalmente */
-    width: 100%; /* Asegúrate de que ocupe el ancho completo */
+    justify-content: space-between;
+    align-items: center;
 }
 
+/* Reducir el tamaño de la fuente y el logo */
 .logo {
-    color: rgb(167, 54, 54); /* Cambia el color del logo a blanco para que destaque sobre el fondo negro */
-    font-size: 20px; /* Tamaño de fuente del logo */
-    font-weight: bold; /* Negrita */
-    margin-right: auto; /* Asegúrate de que haya espacio a la derecha */
+    font-size: 18px;
+    font-weight: bold;
 }
 
+.nav-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ajustar el margen de los elementos del menú */
+.nav-item {
+    margin-left: 15px;
+}
+
+/* Ajustar el padding de los enlaces para que ocupen menos espacio */
+.nav-item a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+/* Cambiar el color de fondo en hover */
+.nav-item a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos del botón de Cerrar Sesión */
+.nav-item .btn-logout {
+    background-color: #e63946;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 14px;
+}
+
+/* Cambiar el color del botón en hover */
+.nav-item .btn-logout:hover {
+    background-color: #d62828;
+}
+
+/* Estilos para el botón de menú responsive */
 .menu-toggle {
-    display: none; /* Ocultar por defecto */
-    flex-direction: column; /* Para mostrar las barras en vertical */
-    cursor: pointer; /* Cambiar cursor al pasar por encima */
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
 }
 
 .bar {
-    height: 3px; /* Grosor de las barras */
-    width: 25px; /* Ancho de las barras */
-    background-color: white; /* Color de las barras (blanco) */
-    margin: 3px; /* Espacio entre las barras */
-    transition: 0.3s; /* Transición suave para la animación */
+    height: 2px; /* Reducir el grosor de las barras del menú */
+    width: 20px;
+    background: white;
+    margin: 3px 0;
+    transition: 0.4s;
 }
 
-/* Estilo para el menú */
-.nav-menu {
-    display: flex; /* Mostrar elementos en fila */
-    list-style: none; /* Sin viñetas */
-    margin: 0; /* Sin margen */
-    padding: 0; /* Sin relleno */
-}
-
-.nav-item {
-    margin-left: 20px; /* Espacio entre elementos */
-}
-
-.nav-item a {
-    color: white; /* Color del texto de los enlaces (blanco) */
-    text-decoration: none; /* Sin subrayado */
-    font-size: 16px; /* Tamaño de fuente del texto */
-}
-
-.nav-item a:hover {
-    text-decoration: underline; /* Subrayar al pasar el ratón */
-}
-
-/* Estilo para el menú desplegable */
-@media screen and (max-width: 768px) {
+/* Estilos responsivos */
+@media (max-width: 768px) {
     .menu-toggle {
-        display: flex; /* Mostrar el botón de menú en pantallas pequeñas */
+        display: flex;
     }
 
     .nav-menu {
-        display: none; /* Ocultar menú en pantallas pequeñas */
-        flex-direction: column; /* Mostrar en columna */
-        position: absolute; /* Posicionarlo absolutamente */
-        top: 60px; /* Justo debajo de la navbar */
-        right: 0; /* Alinear a la derecha */
-        background-color: black; /* Color de fondo del menú desplegable (negro) */
-        width: 100%; /* Ancho completo */
-        padding: 10px 0; /* Relleno alrededor del menú */
-        border-radius: 5px; /* Bordes redondeados */
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 50px; /* Ajuste para reducir el grosor */
+        left: 0;
+        right: 0;
+        background-color: #333;
+        padding: 10px 0;
     }
 
     .nav-menu.active {
-        display: flex; /* Mostrar menú cuando está activo */
+        display: flex;
+    }
+
+    .nav-item {
+        margin: 8px 0;
+        text-align: center;
     }
 }

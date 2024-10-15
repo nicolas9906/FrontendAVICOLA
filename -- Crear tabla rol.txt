@@ -1,0 +1,40 @@
+-- Crear tabla rol
+CREATE TABLE rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_rol VARCHAR(50) NOT NULL
+);
+
+-- Crear tabla usuarios
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    cedula VARCHAR(20) NOT NULL UNIQUE,
+    contraseña VARCHAR(255) NOT NULL,
+    foto VARCHAR(255),
+    id_rol INT,
+    FOREIGN KEY (id_rol) REFERENCES rol(id) -- Cambia 'roles' a 'rol'
+);
+
+-- Crear tabla galpon
+CREATE TABLE galpon (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero_galpon INT NOT NULL UNIQUE,
+    cantidad_aves INT NOT NULL,
+    saldo_aves INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear tabla produccion
+CREATE TABLE produccion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produccion_huevos INT NOT NULL,
+    cantidad_bultos INT NOT NULL,
+    mortalidad_gallinas INT NOT NULL,
+    fecha DATE NOT NULL,
+    id_usuario INT NOT NULL,
+    galpon_id INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (galpon_id) REFERENCES galpon(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+

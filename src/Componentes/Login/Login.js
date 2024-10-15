@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Importación correcta de jwtDecode
-
+import {jwtDecode} from 'jwt-decode'; // Importación correcta de jwtDecode
+import './Login.css';
+import ave from '../../FOTO/ave.jpg';
 const Login = () => {
     const [cedula, setCedula] = useState('');
     const [password, setPassword] = useState('');
@@ -12,6 +13,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Verificación básica de los campos de entrada
+        if (!cedula || !password) {
+            setError('Por favor, completa todos los campos');
+            return;
+        }
+
         try {
             // Llamada al backend para autenticación
             const response = await axios.post('http://localhost:4000/login', { cedula, password });
@@ -19,7 +26,7 @@ const Login = () => {
             // Si la autenticación es exitosa, obtenemos el token
             const token = response.data.token;
 
-            // Guardar el token en el localStorage o sessionStorage
+            // Guardar el token en el localStorage
             localStorage.setItem('token', token);
 
             // Decodificar el token para obtener el rol del usuario
@@ -35,13 +42,20 @@ const Login = () => {
                 setError('Rol no autorizado');
             }
         } catch (err) {
-            setError('Credenciales incorrectas');
+            // Captura del error de la solicitud
+            if (err.response && err.response.status === 401) {
+                setError('Credenciales incorrectas');
+            } else {
+                setError('Error en la conexión al servidor');
+            }
         }
     };
 
     return (
-        <div>
-            <h2>Login</h2>
+        <div className='login'>
+            <img src={ave} alt="ave"/>
+            <h2>AVICOLA</h2>
+
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text" 
@@ -57,7 +71,7 @@ const Login = () => {
                 />
                 <button type="submit">Login</button>
             </form>
-            {error && <p>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };

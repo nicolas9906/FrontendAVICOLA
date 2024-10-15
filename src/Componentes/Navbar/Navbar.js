@@ -1,8 +1,8 @@
-// Navbar.js
 import React, { useEffect, useState } from 'react';
 import '../Navbar/Navbar.css'; // Asegúrate de crear este archivo CSS
 import { jwtDecode } from 'jwt-decode';
-import Button from 'react-bootstrap/Button';
+
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -31,15 +31,15 @@ const Navbar = () => {
                 <div className="logo">GALPON # {galpon}</div>
                 <div className={`menu-toggle ${isOpen ? 'open' : ''}`} onClick={toggleMenu} aria-label="Toggle navigation">
                     <span className="bar"></span>
-                    <span className="bar"></span>   
+                    <span className="bar"></span>
                     <span className="bar"></span>
                 </div>
                 <ul className={`nav-menu ${isOpen ? 'active' : ''}`}>
-                    <li className="nav-item"><a href="/">Inicio</a></li>
+                    <li className="nav-item"><Link to="/Perfil">Perfil</Link></li>
                     <li className="nav-item"><a href="https://proceal.com/nosotros/">Acerca de</a></li>
-                    <li className="nav-item"><a href="/services">Servicios</a></li>
+                    <li className="nav-item"><Link to="/services">Servicios</Link></li>
                     <li className="nav-item">
-                        <Button variant="danger" onClick={handleLogout}>Cerrar Sesión</Button>
+                        <button className="btn-logout"  onClick={handleLogout}>Cerrar Sesión</button>
                     </li>
                 </ul>
             </div>

@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Login from './Componentes/Login/Login';
+import Admin from './Componentes/Administrador/Admin';
+import Galponero from './Componentes/Galponero/Galponero';
+import PrivateRoute from './Rutas/PrivateRoute';
+import Perfil from './Componentes/Perfil/Perfil';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/Perfil" element={<Perfil />} />
+            <Route path="/admin" element={
+                <PrivateRoute requiredRole={1}>
+                    <Admin />
+                </PrivateRoute>
+            } />
+            <Route path="/galponero" element={
+                <PrivateRoute requiredRole={2}>
+                    <Galponero />
+                </PrivateRoute>
+            } />
+        </Routes>
+    );
+};
 
 export default App;

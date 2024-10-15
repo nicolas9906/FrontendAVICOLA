@@ -45,3 +45,32 @@
     font-weight: bold;
     margin-top: 10px;
 }
+.tab-menu {
+    display: flex; /* Muestra las pestañas en línea */
+    justify-content: center; /* Centra las pestañas horizontalmente */
+    margin: 20px 0; /* Espacio arriba y abajo del menú */
+}
+
+.tab-menu button {
+    background-color: #007BFF; /* Color de fondo de las pestañas */
+    color: white; /* Color del texto */
+    border: none; /* Sin bordes */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espacio interno en el botón */
+    margin: 0 10px; /* Espacio horizontal entre botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Efecto de transición al cambiar el color */
+}
+
+.tab-menu button:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+.tab-menu button:focus {
+    outline: none; /* Quita el contorno del botón al hacer clic */
+}
+
+.tab-menu button.active {
+    background-color: #0056b3; /* Color de fondo para la pestaña activa */
+    font-weight: bold; /* Resalta el texto de la pestaña activa */
+}

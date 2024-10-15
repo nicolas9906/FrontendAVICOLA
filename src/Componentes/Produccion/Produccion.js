@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import './ProduccionForm.css';
+import egg from '../../FOTO/egg.jpg';
+
 const ProduccionForm = () => {
     const [produccionHuevos, setProduccionHuevos] = useState('');
     const [cantidadBultos, setCantidadBultos] = useState('');
@@ -9,22 +11,16 @@ const ProduccionForm = () => {
     const [idGalpon, setIdGalpon] = useState(null);
     const [mensaje, setMensaje] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const modalRef = useRef(null);
 
     useEffect(() => {
-        // Obtener el token de localStorage
         const token = localStorage.getItem('token');
-        
         if (token) {
             try {
-                // Decodificar el token
                 const decodedToken = jwtDecode(token);
-                console.log('Token decodificado:', decodedToken); // Verifica el contenido del token
-
-                // Establecer los valores de id_usuario y id_galpon
-                setIdUsuario(decodedToken.id_usuario); // Cambia 'id_usuario' al nombre correcto en tu token
-                setIdGalpon(decodedToken.galpon_id);   // Cambia 'id_galpon' al nombre correcto en tu token
+                setIdUsuario(decodedToken.id_usuario);
+                setIdGalpon(decodedToken.galpon_id);
             } catch (error) {
-                console.error('Error al decodificar el token:', error);
                 setMensaje('Error al procesar el token.');
             }
         } else {
@@ -32,22 +28,33 @@ const ProduccionForm = () => {
         }
     }, []);
 
+    // Cerrar el modal al hacer clic fuera
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Crear el objeto con la información del formulario
         const data = {
             produccion_huevos: parseInt(produccionHuevos),
             cantidad_bultos: parseInt(cantidadBultos),
             mortalidad_gallinas: parseInt(mortalidadGallinas),
-            id_usuario: idUsuario, // Usar el id del usuario decodificado
-            galpon_id: idGalpon,   // Usar el id del galpón decodificado
+            id_usuario: idUsuario,
+            galpon_id: idGalpon,
         };
 
-        // Depuración: imprimir los datos antes de enviar
-        console.log('Datos a enviar:', data);
-
-        // Enviar los datos a tu API
         fetch('http://localhost:4000/produccion', {
             method: 'POST',
             headers: {
@@ -63,65 +70,67 @@ const ProduccionForm = () => {
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
             setMensaje('Datos enviados con éxito');
         })
         .catch((error) => {
-            console.error('Error:', error);
             setMensaje('Error al enviar los datos: ' + error.message);
         });
 
-        // Limpiar el formulario después de enviar los datos
         setProduccionHuevos('');
         setCantidadBultos('');
         setMortalidadGallinas('');
     };
 
     return (
-        <div>
-        <button onClick={() => setIsOpen(true)}>Abrir Formulario de Producción</button>
+        <div className='modal-content'>
+            <button onClick={() => setIsOpen(true)}>Abrir Formulario de Producción</button>
+            {isOpen && (
+                <div className="modal">
+                    <div className="modal-content" ref={modalRef}>
+                        <span className="close" onClick={() => setIsOpen(false)}>&times;</span>
+                        <h2>Formulario de Producción</h2>
+                        <div className="modal-body">
+                        
 
-        {isOpen && (
-            <div className="modal">
-                <div className="modal-content">
-                    <span className="close" onClick={() => setIsOpen(false)}>&times;</span>
-                    <h2>Formulario de Producción</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>Producción de Huevos:</label>
-                            <input 
-                                type="number" 
-                                value={produccionHuevos} 
-                                onChange={(e) => setProduccionHuevos(e.target.value)} 
-                                required
-                            />
+
+                            <form onSubmit={handleSubmit}>
+                            <img src={egg} alt="egg" style={{ maxWidth: '150px', height: 'auto', borderRadius: '8px' }} />
+                                <div>
+                                    <label>Producción de Huevos:</label>
+                                    <input 
+                                        type="number" 
+                                        value={produccionHuevos} 
+                                        onChange={(e) => setProduccionHuevos(e.target.value)} 
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label>Cantidad de Bultos:</label>
+                                    <input 
+                                        type="number" 
+                                        value={cantidadBultos} 
+                                        onChange={(e) => setCantidadBultos(e.target.value)} 
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label>Mortalidad de Gallinas:</label>
+                                    <input 
+                                        type="number" 
+                                        value={mortalidadGallinas} 
+                                        onChange={(e) => setMortalidadGallinas(e.target.value)} 
+                                        required
+                                    />
+                                </div>
+                                <button type="submit">Enviar</button>
+                            </form>
                         </div>
-                        <div>
-                            <label>Cantidad de Bultos:</label>
-                            <input 
-                                type="number" 
-                                value={cantidadBultos} 
-                                onChange={(e) => setCantidadBultos(e.target.value)} 
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label>Mortalidad de Gallinas:</label>
-                            <input 
-                                type="number" 
-                                value={mortalidadGallinas} 
-                                onChange={(e) => setMortalidadGallinas(e.target.value)} 
-                                required
-                            />
-                        </div>
-                        <button type="submit">Enviar</button>
-                    </form>
-                    {mensaje && <p>{mensaje}</p>}
+                        {mensaje && <p>{mensaje}</p>}
+                    </div>
                 </div>
-            </div>
-        )}
-    </div>
-);
+            )}
+        </div>
+    );
 };
 
 export default ProduccionForm;

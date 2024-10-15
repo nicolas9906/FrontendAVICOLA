@@ -1,0 +1,75 @@
+/* Estilos para el contenedor de login */
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+/* Estilos para la imagen */
+.login img {
+    width: 150px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    border-radius: 50%; /* Redondea los bordes para un estilo circular */
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un efecto de elevación */
+}
+
+/* Estilos del formulario */
+.login form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+}
+
+/* Estilos del título */
+.login h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Estilos para los campos de entrada */
+.login input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Efecto en el foco de los campos de entrada */
+.login input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Estilos para el botón */
+.login button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.login button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para el mensaje de error */
+.login p {
+    color: red;
+    margin-top: 15px;
+    font-weight: bold;
+}

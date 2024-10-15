@@ -2,8 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { jwtDecode as jwt_decode } from 'jwt-decode';
 
-
-const PrivateRoute = ({ children, requiredRole }) => {
+const PrivateRoute = ({ children, allowedRoles }) => {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -11,17 +10,22 @@ const PrivateRoute = ({ children, requiredRole }) => {
     }
 
     try {
-        // Decodificar el token para obtener el rol
         const decodedToken = jwt_decode(token);
-        const { rol } = decodedToken;
+        const { rol, exp } = decodedToken;
 
-        if (rol === requiredRole) {
-            return children; // Si el rol coincide, renderizar el componente
+        if (exp * 1000 < Date.now()) {
+            localStorage.removeItem('token'); // Eliminar token expirado
+            return <Navigate to="/Login" />; // Redirigir si el token ha expirado
+        }
+
+        if (!allowedRoles || allowedRoles.includes(rol)) {
+            return children; // Renderizar el componente si el rol es permitido
         } else {
             return <Navigate to="/" />; // Redirigir si el rol no coincide
         }
     } catch (err) {
-        return <Navigate to="/" />; // Si el token es inválido, redirigir al login
+        localStorage.removeItem('token'); // Eliminar token inválido
+        return <Navigate to="/Login" />; // Redirigir si el token es inválido
     }
 };
 
