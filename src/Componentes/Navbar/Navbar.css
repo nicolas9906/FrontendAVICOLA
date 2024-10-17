@@ -1,6 +1,6 @@
 /* Navbar.css */
 
-/* Reducir el padding de la barra de navegación */
+/* Estilo del navbar */
 .navbar {
     background-color: #333;
     color: white;
@@ -9,21 +9,27 @@
     top: 0;
     left: 0;
     z-index: 1000;
-    padding: 5px 20px; /* Reducir el padding */
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    transition: background-color 0.3s; /* Transición para un efecto más suave */
 }
 
+/* Contenedor del navbar */
 .navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrar el contenido */
 }
 
-/* Reducir el tamaño de la fuente y el logo */
+/* Estilo del logo */
 .logo {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
 }
 
+/* Estilo del menú de navegación */
 .nav-menu {
     list-style: none;
     display: flex;
@@ -31,38 +37,39 @@
     padding: 0;
 }
 
-/* Ajustar el margen de los elementos del menú */
+/* Estilo de los elementos del menú */
 .nav-item {
-    margin-left: 15px;
+    margin-left: 20px;
 }
 
-/* Ajustar el padding de los enlaces para que ocupen menos espacio */
+/* Estilo de los enlaces */
 .nav-item a {
     color: white;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 8px 16px;
     border-radius: 4px;
-    transition: background 0.3s;
+    transition: background 0.3s, color 0.3s;
 }
 
-/* Cambiar el color de fondo en hover */
+/* Cambio de color de fondo y texto al pasar el mouse */
 .nav-item a:hover {
     background: rgba(255, 255, 255, 0.2);
+    color: #f1f1f1;
 }
 
-/* Estilos del botón de Cerrar Sesión */
+/* Estilo del botón de Cerrar Sesión */
 .nav-item .btn-logout {
     background-color: #e63946;
     border: none;
     color: white;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s;
     font-size: 14px;
 }
 
-/* Cambiar el color del botón en hover */
+/* Cambio de color del botón en hover */
 .nav-item .btn-logout:hover {
     background-color: #d62828;
 }
@@ -75,10 +82,10 @@
 }
 
 .bar {
-    height: 2px; /* Reducir el grosor de las barras del menú */
-    width: 20px;
+    height: 2px;
+    width: 25px;
     background: white;
-    margin: 3px 0;
+    margin: 4px 0;
     transition: 0.4s;
 }
 
@@ -92,11 +99,12 @@
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 50px; /* Ajuste para reducir el grosor */
+        top: 100%; /* Para que el menú se despliegue debajo del navbar */
         left: 0;
         right: 0;
         background-color: #333;
-        padding: 10px 0;
+        padding: 15px 0;
+        border-radius: 0 0 8px 8px;
     }
 
     .nav-menu.active {
@@ -104,7 +112,40 @@
     }
 
     .nav-item {
-        margin: 8px 0;
+        margin: 10px 0;
         text-align: center;
     }
+
+    .navbar {
+        padding: 10px;
+    }
+}
+
+/* Efecto de fondo opaco cuando se desplaza hacia abajo */
+.navbar.scrolled {
+    background-color: rgba(51, 51, 51, 0.9);
+}
+/* Estilos del botón de Cerrar Sesión (icono) */
+.nav-item .btn-logout {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+/* Cambiar el color del icono en hover */
+.nav-item .btn-logout:hover {
+    color: #d62828;
+}
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Centra el icono verticalmente */
+}
+
+.logo .svg-inline--fa {
+    font-size: 24px; /* Tamaño del icono */
 }

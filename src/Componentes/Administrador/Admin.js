@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import Navbar from '../Navbar/Navbar';
 import ProduccionForm from '../Produccion/Produccion';
 import ProduccionChart from '../Produccion/ProduccionChart';
-import UpdateProduccionModal from '../Administrador/UpdateProduccionModal'; // Importa el nuevo componente
+import UpdateProduccionModal from '../Administrador/UpdateProduccionModal'; 
 import './Admin.css';
 
 const Admin = () => {
@@ -13,8 +13,11 @@ const Admin = () => {
     const [mensaje, setMensaje] = useState('');
     const [idUsuario, setIdUsuario] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedProduccion, setSelectedProduccion] = useState(null); // Estado para almacenar la producción seleccionada
-    const [activeTab, setActiveTab] = useState('tabla'); // Estado para la pestaña activa
+    const [selectedProduccion, setSelectedProduccion] = useState(null);
+    const [activeTab, setActiveTab] = useState('tabla');
+    const [consultaProduccion, setConsultaProduccion] = useState([]); 
+    const [filterGalpon, setFilterGalpon] = useState(''); 
+    const [filterFecha, setFilterFecha] = useState(''); 
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -56,8 +59,8 @@ const Admin = () => {
     };
 
     const handleUpdateClick = (produccionData) => {
-        setSelectedProduccion(produccionData); // Establece la producción seleccionada
-        setIsModalOpen(true); // Abre el modal
+        setSelectedProduccion(produccionData);
+        setIsModalOpen(true);
     };
 
     const handleUpdate = async (updatedData) => {
@@ -78,18 +81,48 @@ const Admin = () => {
             const data = await response.json();
             console.log('Producción actualizada:', data);
             setMensaje('Producción actualizada con éxito');
-            fetchProduccion(idUsuario); // Vuelve a cargar la producción
+            fetchProduccion(idUsuario);
         } catch (error) {
             console.error('Error al actualizar la producción:', error);
             setMensaje('Error al actualizar la producción: ' + error.message);
         }
     };
 
-    // Cambiar formato de la fecha para que se vea mejor
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
         const date = new Date(dateString);
         return date.toLocaleString('es-ES', options);
+    };
+
+   
+    const handleConsulta = () => {
+       
+
+
+
+        const filtered = produccion.filter((item) => {
+            return (
+                (filterGalpon === '' || item.galpon.numero.toString() === filterGalpon) &&
+                (filterFecha === '' || item.fecha.startsWith(filterFecha))
+            );
+        });
+        setConsultaProduccion(filtered);
+        let totalHuevos = 0;
+        let totalBultos = 0;
+        let totalMortalidad = 0;
+
+
+        consultaProduccion.forEach((item) => {
+            totalHuevos += item.produccion_huevos;
+            totalBultos += item.cantidad_bultos;
+            totalMortalidad += item.mortalidad_gallinas;
+        });
+
+     
+    setMensaje(
+        `Total Producción de Huevos: ${totalHuevos},
+         Total Cantidad de Bultos: ${totalBultos}, Total Mortalidad de Gallinas: ${totalMortalidad}`
+    );
     };
 
     return (
@@ -97,20 +130,19 @@ const Admin = () => {
             <Navbar />
             <div className='admin-container'>
                 <div className='admin-content'> 
-                    <h1>Bienvenido Administrador {userName}</h1>
+                    <h1>   </h1>
+                    <h1>   </h1>
                     <ProduccionForm />
-
-                    {/* Menú de pestañas */}
+                    <h1>Bienvenido Administrador {userName}</h1>
                     <div className="tab-menu">
                         <button onClick={() => setActiveTab('tabla')}>Producción</button>
                         <button onClick={() => setActiveTab('chart')}>Gráfico</button>
                         <button onClick={() => setActiveTab('consulta')}>Consulta</button>
                     </div>
 
-                    {/* Contenido de la pestaña activa */}
                     {activeTab === 'tabla' && (
                         <div>
-                            <h2>Producción de la avicola MOCHACA</h2>
+                           
                             {mensaje && <p>{mensaje}</p>}
                             <table>
                                 <thead>
@@ -159,14 +191,61 @@ const Admin = () => {
                     {activeTab === 'consulta' && (
                         <div>
                             <h2>Consulta Personalizada</h2>
-                          
+                            <div className="consulta-form">
+                                <input
+                                    type="text"
+                                    placeholder="Número de galpón"
+                                    value={filterGalpon}
+                                    onChange={(e) => setFilterGalpon(e.target.value)}
+                                />
+                                <input
+                                    type="date"
+                                    placeholder="Fecha"
+                                    value={filterFecha}
+                                    onChange={(e) => setFilterFecha(e.target.value)}
+                                />
+                                <button onClick={handleConsulta}>Buscar</button>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre del Usuario</th>
+                                        <th>Número de galpón</th>
+                                        <th>Producción de Huevos</th>
+                                        <th>Cantidad de Bultos</th>
+                                        <th>Mortalidad de Gallinas</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {consultaProduccion.length > 0 ? (
+                                        consultaProduccion.map((item) => (
+                                            <tr key={item.id}>
+                                                <td>{item.usuario.nombre}</td>
+                                                <td>{item.galpon.numero}</td>
+                                                <td>{item.produccion_huevos}</td>
+                                                <td>{item.cantidad_bultos}</td>
+                                                <td>{item.mortalidad_gallinas}</td>
+                                                <td>{formatDate(item.fecha)}</td>
+                                                
+                                            </tr>
+                                            
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6">No hay resultados para la consulta.</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                                {mensaje && <p>{mensaje}</p>}
+                            </table>
                         </div>
                     )}
 
                     <UpdateProduccionModal 
                         isOpen={isModalOpen} 
                         onClose={() => setIsModalOpen(false)} 
-                        produccionData={selectedProduccion || {}} // Asegúrate de que haya datos
+                        produccionData={selectedProduccion || {}} 
                         onUpdate={handleUpdate} 
                     />
                 </div>

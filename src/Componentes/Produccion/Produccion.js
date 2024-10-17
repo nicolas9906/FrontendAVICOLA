@@ -28,7 +28,7 @@ const ProduccionForm = () => {
         }
     }, []);
 
-    // Cerrar el modal al hacer clic fuera
+    // Cerrar el modal al hacer click fuera
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {

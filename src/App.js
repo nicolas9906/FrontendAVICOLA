@@ -12,12 +12,12 @@ const App = () => {
             <Route path="/" element={<Login />} />
             <Route path="/Perfil" element={<Perfil />} />
             <Route path="/admin" element={
-                <PrivateRoute requiredRole={1}>
+                <PrivateRoute allowedRoles={[1]}> {/* Cambiar requiredRole a allowedRoles */}
                     <Admin />
                 </PrivateRoute>
             } />
             <Route path="/galponero" element={
-                <PrivateRoute requiredRole={2}>
+                <PrivateRoute allowedRoles={[2]}> {/* Cambiar requiredRole a allowedRoles */}
                     <Galponero />
                 </PrivateRoute>
             } />

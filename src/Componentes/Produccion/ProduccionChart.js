@@ -1,4 +1,4 @@
-// ProduccionChart.js
+
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -29,9 +29,8 @@ const ProduccionChart = ({ produccion }) => {
     const bultos = produccion.map(item => item.cantidad_bultos);
     const mortalidad = produccion.map(item => item.mortalidad_gallinas);
 
-    // Configura los datos para el gráfico
     const data = {
-        labels: dates, // Usar fechas como etiquetas
+        labels: dates, 
         datasets: [
             {
                 label: 'Producción de Huevos',
@@ -44,7 +43,7 @@ const ProduccionChart = ({ produccion }) => {
         ],
     };
     const data2 = {
-        labels: dates, // Usar fechas como etiquetas
+        labels: dates,
         datasets: [
             {
                 label: 'Cantidad de Bultos',
