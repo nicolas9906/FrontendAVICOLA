@@ -38,7 +38,7 @@ const Login = () => {
             if (err.response && err.response.status === 401) {
                 setError('Credenciales incorrectas');
             } else {
-                setError('Error en la conexión al servidor');
+                setError('Error al digitar las credenciales');
             }
         }
     };

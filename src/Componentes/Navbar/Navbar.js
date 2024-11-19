@@ -37,7 +37,7 @@ const Navbar = () => {
             <div className="navbar-container">
                 <div className="logo">
                     <FontAwesomeIcon icon={faEgg} style={{ marginRight: '8px' }} />
-                    GALPON # {galpon}
+                    AVITECH 
                 </div>
                 <div className={`menu-toggle ${isOpen ? 'open' : ''}`} onClick={toggleMenu} aria-label="Toggle navigation">
                     <span className="bar"></span>
@@ -53,7 +53,7 @@ const Navbar = () => {
                     )}
                     <li className="nav-item"><Link to="/Perfil">Perfil</Link></li>
                     <li className="nav-item"><a href="https://proceal.com/nosotros/">Acerca de</a></li>
-                    <li className="nav-item"><Link to="/services">Servicios</Link></li>
+                   
                     <li className="nav-item">
                         <button className="btn-logout" onClick={handleLogout} aria-label="Cerrar Sesión">
                             <FontAwesomeIcon icon={faSignOutAlt} />
